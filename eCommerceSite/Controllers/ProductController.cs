@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using eCommerceSite.Data;
@@ -8,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace eCommerceSite.Controllers
 {
+    [DebuggerDisplay("{" + nameof(GetDebuggerDisplay) + "(),nq}")]
     public class ProductController : Controller
     {
         private readonly ProductContext _context;
@@ -31,6 +33,31 @@ namespace eCommerceSite.Controllers
 
             // Send list of products to view to be displayed
             return View(products);
+        }
+
+        [HttpGet]
+        public IActionResult Add()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Add(Product p)
+        {
+            if(ModelState.IsValid)
+            {
+                _context.Products.Add(p);
+                _context.SaveChanges();
+                TempData["Message"] = $"{p.Title} was born!";
+
+                return RedirectToAction("index");
+            }
+            return View();
+        }
+
+        private string GetDebuggerDisplay()
+        {
+            return ToString();
         }
     }
 }

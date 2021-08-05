@@ -4,6 +4,12 @@
 }
 
 <h1>Product Catalog</h1>
+@if (TempData["Message"] !=null)
+{
+    @TempData["Message"]
+}
+
+<a asp-action="Add">Add Product </a>
 
 <div class="table-responsive">
     <table class="table table-hover table-striped">
