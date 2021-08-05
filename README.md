@@ -1,5 +1,5 @@
 # eCommerceSite-tfox
-basic eCommerce site as class project
+basic eCommerce site as class project<br>
 This project uses .NET, .ASP MVS and basic CRUD functionality with an Entity Framework Core chaser.
 
 
