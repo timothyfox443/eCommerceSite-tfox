@@ -5,17 +5,22 @@
 
 <h1>Add</h1>
 <form method="post">
-    <label asp-for="Title"></label>
-    <input asp-for="Title" />
-    <span asp-validation-for="Title"></span>
-    <br />
-    <label asp-for="Price"></label>
-    <input asp-for="Price" />
-    <span asp-validation-for="Price"></span>
-    <br />
-    <label asp-for="Category"></label>
-    <input asp-for="Category" />
-    <span asp-validation-for="Category"></span>
-    <br />
-    <input type="submit" />
+    <div class="form-group">
+        <label for="title" asp-for="Title"></label>
+        <input id="title" class="form-control" asp-for="Title" />
+        <span asp-validation-for="Title"></span>
+    </div>
+
+    <div class="form-group">
+        <label for="title" asp-for="Price"></label>
+        <input id="title" class="form-control" asp-for="Price" />
+        <span asp-validation-for="Price"></span>
+    </div>
+
+    <div class="form-group">
+        <label for="title" asp-for="Category"></label>
+        <input id="title" class="form-control" asp-for="Category" />
+        <span asp-validation-for="Category"></span>
+    </div>
+    <input type="submit" class="btn btn-success"/>
 </form>
