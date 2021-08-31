@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using eCommerceSite.Data;
 using eCommerceSite.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace eCommerceSite.Controllers
 {
@@ -22,17 +23,17 @@ namespace eCommerceSite.Controllers
         /// <summary>
         /// Displays a view that lists all products
         /// </summary>
-        public IActionResult Index(int? id)
+        public async Task<IActionResult> Index() //check this argument (int? id)
         {
             // Get all products from database
             // List<Product> products = _context.Products.ToList();
             List<Product> products =
-                (from p in _context.Products
-                 select p).ToList();
+                await (from p in _context.Products
+                 select p).ToListAsync();
             
 
             // Send list of products to view to be displayed
-            return View(products);
+            return View(products); // this returns the product index.cshtml page
         }
 
         [HttpGet]
@@ -40,19 +41,28 @@ namespace eCommerceSite.Controllers
         {
             return View();
         }
-
+        /// <summary>
+        /// This adds an item to the database and upon success displays a success message
+        /// </summary>
+        /// <param name="p"></param>
+        /// <returns></returns>
         [HttpPost]
-        public IActionResult Add(Product p)
+        public async Task<IActionResult> Add(Product p)
         {
             if(ModelState.IsValid)
             {
+                //adds product to DB
                 _context.Products.Add(p);
-                _context.SaveChanges();
+
+                //
+                await _context.SaveChangesAsync();
+
                 TempData["Message"] = $"{p.Title} was born!";
 
+                //redirects back to catalog page view
                 return RedirectToAction("index");
             }
-            return View();
+            return View(); // returns add.cshtml in product view
         }
 
         private string GetDebuggerDisplay()
