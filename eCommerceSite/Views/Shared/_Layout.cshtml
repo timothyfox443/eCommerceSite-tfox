@@ -1,6 +1,6 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
-<head>
+<head>@*this is the nav bar*@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - eCommerceSite</title>
@@ -33,13 +33,13 @@
             </div>
         </nav>
     </header>
-    <div class="container">
+    <div class="container">@*this is the body of the site that holds the views when being displayed*@
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-top footer text-muted">@*this is the container for the footer*@
         <div class="container">
             &copy; 2020 - eCommerceSite - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
