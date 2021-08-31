@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using eCommerceSite.Models;
 
-namespace eCommerceSite.Controllers/*takes care of the home screen and all its */
+namespace eCommerceSite.Controllers/*takes care of the home screen and all its errthang*/
 {
     public class HomeController : Controller
     {

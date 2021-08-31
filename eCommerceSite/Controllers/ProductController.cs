@@ -45,7 +45,7 @@ namespace eCommerceSite.Controllers
         /// This adds an item to the database and upon success displays a success message
         /// </summary>
         /// <param name="p"></param>
-        /// <returns></returns>
+        /// <returns> View() </returns>
         [HttpPost]
         public async Task<IActionResult> Add(Product p)
         {
@@ -69,5 +69,30 @@ namespace eCommerceSite.Controllers
         {
             return ToString();
         }//delete goes somewhere
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            // get product with corresponding id
+            Product p =
+                await(from prod in _context.Products
+                      where prod.ProductId == id
+                      select prod).SingleAsync();
+            return View(p);
+        }
+        
+        [HttpPost]
+        public async Task<IActionResult> Edit(Product p)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Entry(p).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+
+                ViewData["Message"] = "This product entry was altered";
+            }
+            return View(p);
+        }
+    
     }
 }
