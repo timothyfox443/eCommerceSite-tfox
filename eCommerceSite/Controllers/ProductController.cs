@@ -22,7 +22,7 @@ namespace eCommerceSite.Controllers
         /// <summary>
         /// Displays a view that lists all products
         /// </summary>
-        public IActionResult Index()
+        public IActionResult Index(int? id)
         {
             // Get all products from database
             // List<Product> products = _context.Products.ToList();
@@ -58,6 +58,6 @@ namespace eCommerceSite.Controllers
         private string GetDebuggerDisplay()
         {
             return ToString();
-        }
+        }//delete goes somewhere
     }
 }
