@@ -29,8 +29,8 @@ namespace eCommerceSite.Controllers
             // List<Product> products = _context.Products.ToList();
             List<Product> products =
                 await (from p in _context.Products
-                 select p).ToListAsync();
-            
+                       select p).ToListAsync();
+
 
             // Send list of products to view to be displayed
             return View(products); // this returns the product index.cshtml page
@@ -49,7 +49,7 @@ namespace eCommerceSite.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(Product p)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 //adds product to DB
                 _context.Products.Add(p);
@@ -75,12 +75,12 @@ namespace eCommerceSite.Controllers
         {
             // get product with corresponding id
             Product p =
-                await(from prod in _context.Products
-                      where prod.ProductId == id
-                      select prod).SingleAsync();
+                await (from prod in _context.Products
+                       where prod.ProductId == id
+                       select prod).SingleAsync();
             return View(p);
         }
-        
+
         [HttpPost]
         public async Task<IActionResult> Edit(Product p)
         {
@@ -93,6 +93,32 @@ namespace eCommerceSite.Controllers
             }
             return View(p);
         }
-    
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
+        {
+            Product p = await (from prod in _context.Products
+                               where prod.ProductId == id
+                               select prod).SingleAsync();
+
+            return View(p);
+        }
+
+        [HttpPost]
+        [ActionName ("Delete")]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            Product p = await(from prod in _context.Products
+                              where prod.ProductId == id
+                              select prod).SingleAsync();
+
+            _context.Entry(p).State = EntityState.Deleted;
+            await _context.SaveChangesAsync();
+
+            TempData["Message"] = $"{p.Title} sleeps with the fishes!";
+
+            return RedirectToAction("Index");
+        }
+
     }
 }
