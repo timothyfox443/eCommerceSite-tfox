@@ -44,3 +44,23 @@
         </tbody>
     </table>
 </div>
+@*this is where the page numbers come from so if it looks bad, blame this
+    cuz yeah, it didn't work with the first set of code but the same thing
+    written again worked*@
+
+<ul class="pagination pagination-sm">
+    @for (int i = 1; i <= (int)ViewData["MaxPage"]; i++)
+    {
+        string classes = "page-item";
+        if (i == (int)ViewData["CurrentPage"])
+        {
+            classes += " active";
+        }
+        <li class="@classes">
+            <a class="page-link" asp-action="Index" asp-route-id="@i">
+                @i
+            </a>
+        </li>
+    }
+</ul>
+
