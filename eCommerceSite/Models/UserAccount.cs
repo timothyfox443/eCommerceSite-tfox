@@ -18,9 +18,6 @@ namespace eCommerceSite.Models
         public string Password { get; set; }
 
         public DateTime? DateOfBirth { get; set; }
-
-
-
     }
     
     public class RegistrationViewModel
@@ -55,4 +52,16 @@ namespace eCommerceSite.Models
         public DateTime? DateOfBirth { get; set; }
     }
 
+    public class LoginViewModel
+    {
+        [Required]
+        [Display(Name ="Username or e-mail address")]
+        public string UsernameOrEmail { get; set; }
+
+        [Required]
+        [DataType(DataType.Password)]
+        [StringLength(120, MinimumLength = 6, ErrorMessage = "Password must be between {2} and {1} characters")]
+        public string Password { get; set; }
+
+    }
 }

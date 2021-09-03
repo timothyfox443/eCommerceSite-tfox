@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using eCommerceSite.Models;
+using eCommerceSite.Data;
 
 namespace eCommerceSite.Controllers/*takes care of the home screen and all its errthang*/
 {
