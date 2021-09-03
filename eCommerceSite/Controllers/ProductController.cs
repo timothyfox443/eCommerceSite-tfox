@@ -70,16 +70,14 @@ namespace eCommerceSite.Controllers
         private string GetDebuggerDisplay()
         {
             return ToString();
-        }//delete goes somewhere
+        }
 
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
             // get product with corresponding id
-            Product p =
-                await (from prod in _context.Products
-                       where prod.ProductId == id
-                       select prod).SingleAsync();
+            Product p = await ProductDb.GetSingleProductAsync(_context, id);
+            
             return View(p);
         }
 
@@ -92,6 +90,8 @@ namespace eCommerceSite.Controllers
                 await _context.SaveChangesAsync();
 
                 ViewData["Message"] = "This product entry was altered";
+                
+                return RedirectToAction("Index");
             }
             return View(p);
         }
@@ -99,10 +99,7 @@ namespace eCommerceSite.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
-            Product p = await (from prod in _context.Products
-                               where prod.ProductId == id
-                               select prod).SingleAsync();
-
+            Product p = await ProductDb.GetSingleProductAsync(_context, id);
             return View(p);
         }
 
@@ -110,9 +107,7 @@ namespace eCommerceSite.Controllers
         [ActionName ("Delete")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            Product p = await(from prod in _context.Products
-                              where prod.ProductId == id
-                              select prod).SingleAsync();
+            Product p = await ProductDb.GetSingleProductAsync(_context, id);
 
             _context.Entry(p).State = EntityState.Deleted;
             await _context.SaveChangesAsync();

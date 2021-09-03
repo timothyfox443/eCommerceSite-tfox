@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using eCommerceSite.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -10,6 +6,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace eCommerceSite
 {
@@ -30,14 +30,18 @@ namespace eCommerceSite
             services.AddDbContext<ProductContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            // ALTERNATIVE TO LAMBDA EXPRESSION SYNTAX
-            //services.AddDbContext<ProductContext>(AddSqlServer);
-        }
+            // Config sessions
+            services.AddDistributedMemoryCache();
 
-        //private void AddSqlServer(DbContextOptionsBuilder options)
-        //{
-        //    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
-        //}
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+                options.Cookie.IsEssential = true;
+            });
+
+            // Access httpcontext for view
+            services.AddHttpContextAccessor();
+        }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -58,6 +62,9 @@ namespace eCommerceSite
             app.UseRouting();
 
             app.UseAuthorization();
+
+            // Add this for new config sessions must be between UseRouting() and UseEndpoints()
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {
