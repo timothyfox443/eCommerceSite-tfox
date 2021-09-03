@@ -22,4 +22,27 @@ namespace eCommerceSite.Models
 
 
     }
+    
+    public class RegistrationViewModel
+    {
+        [Required]
+        public string Email { get; set; }
+
+        [Compare(nameof(Email))]
+        public string ConfirmEmail { get; set; }
+
+        [Required]
+        [DataType(DataType.Password)]
+        public string Password { get; set; }
+
+        [Required]
+        [DataType(DataType.Password)]
+        [Compare(nameof(Password))]
+
+        public string ConfirmPassword { get; set; }
+
+        [DataType(DataType.Date)] //time is ignored
+        public DateTime? DateOfBirth { get; set; }
+    }
+
 }
